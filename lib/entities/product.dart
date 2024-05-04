@@ -1,4 +1,4 @@
-class Product {
+class ProductToDisplay {
   String id;
   String category;
   String name;
@@ -6,5 +6,5 @@ class Product {
   String imageUrl;
   double price;
 
-  Product({required this.id, required this.category, required this.name, this.description, required this.imageUrl, required this.price});
+  ProductToDisplay({required this.id, required this.category, required this.name, this.description, required this.imageUrl, required this.price});
 }

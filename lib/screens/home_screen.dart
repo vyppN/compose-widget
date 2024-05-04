@@ -43,7 +43,7 @@ class _HomePageState extends State<HomePage> {
                     title: 'AUTOMOBILE',
                     buttonTitle: 'View Collection',
                   ),
-                  Catalog(products: cars, title: 'Most Popular Outerwear')
+                  Catalog(products: cars, title: 'Most Popular Car')
                 ],
                       ),
               ),

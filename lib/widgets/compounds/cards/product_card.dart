@@ -4,7 +4,7 @@ import 'package:widget_compose/widgets/elements/texts/price_text.dart';
 import 'package:widget_compose/widgets/elements/texts/small_text.dart';
 
 class ProductCard extends StatelessWidget {
-  final Product product;
+  final ProductToDisplay product;
 
   const ProductCard({super.key, required this.product});
 

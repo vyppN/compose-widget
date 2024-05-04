@@ -3,7 +3,7 @@ import 'package:widget_compose/entities/product.dart';
 import 'package:widget_compose/widgets/compounds/cards/product_card.dart';
 
 class ProductList extends StatelessWidget {
-  final List<Product> products;
+  final List<ProductToDisplay> products;
   const ProductList({super.key, required this.products});
 
   @override

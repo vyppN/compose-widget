@@ -21,7 +21,7 @@ class HomeNavbar extends StatelessWidget {
                 onPressed: null,
                 icon: Icon(
                   Icons.info_outline_rounded,
-                  color: Colors.white70,
+                  color: Colors.white,
                   size: 40,
                 )
             ),

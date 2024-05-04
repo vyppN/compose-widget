@@ -11,7 +11,10 @@ class SmallText extends StatelessWidget {
   Widget build(BuildContext context) {
     return Text(
       title,
-      style: TextStyle(color: color ?? Colors.black),
+      style: TextStyle(
+          fontFamily: 'Montserrat',
+          color: color ?? Colors.black
+      ),
     );
   }
 
