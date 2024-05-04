@@ -24,7 +24,7 @@ class _HomePageState extends State<HomePage> {
     return Scaffold(
         backgroundColor: Colors.white,
         body: SafeArea(
-          child: Column(
+          child: ListView(
           children: [
             const HomeNavbar(),
             const HomeJumbotron(
@@ -32,7 +32,14 @@ class _HomePageState extends State<HomePage> {
               title: 'OUTERWEAR',
               buttonTitle: 'View Collection',
             ),
-            Catalog(products: products, title: 'Most Popular Outerwear')
+            Catalog(products: clothes, title: 'Most Popular Outerwear'),
+            const SizedBox(height: 24,),
+            const HomeJumbotron(
+              imageUrl: 'https://images.unsplash.com/photo-1686715692509-8cb69d40d081?q=80&w=3154&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
+              title: 'AUTOMOBILE',
+              buttonTitle: 'View Collection',
+            ),
+            Catalog(products: cars, title: 'Most Popular Outerwear')
           ],
                 ),
         ),

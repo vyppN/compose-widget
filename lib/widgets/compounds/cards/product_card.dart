@@ -8,13 +8,16 @@ class ProductCard extends StatelessWidget {
 
   const ProductCard({super.key, required this.product});
 
+  final double width = 200;
+  final double height = 240;
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 200,
-      height: 240,
+      width: width,
+      height: height,
       child: Stack(children: [
-        Image.network(product.imageUrl,width: 200, fit: BoxFit.cover,),
+        Image.network(product.imageUrl, width: width, height: height, fit: BoxFit.cover,),
         Column(
           children: [
             const Spacer(),
