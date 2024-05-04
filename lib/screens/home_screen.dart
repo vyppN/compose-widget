@@ -1,6 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:widget_compose/entities/product.dart';
+import 'package:widget_compose/network/http/dio_service.dart';
+import 'package:widget_compose/repositories/product_repository.dart';
+import 'package:widget_compose/services/product_service.dart';
 // import 'package:widget_compose/mocks/products.dart';
 import 'package:widget_compose/widgets/compounds/cards/product_card.dart';
 import 'package:widget_compose/widgets/compounds/jumbotron/home_jumbotron.dart';
@@ -10,6 +14,7 @@ import 'package:widget_compose/widgets/compounds/sections/catalog.dart';
 import 'package:widget_compose/widgets/elements/inputs/search_input.dart';
 
 import '../mocks/products.dart';
+import '../port/product.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -19,6 +24,24 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
+  late final IProductService service;
+
+  List<ProductToDisplay> products = [];
+
+  _HomePageState() {
+    final http = DioService('https://fakestoreapi.com');
+    final repo = ProductRepository(http);
+    service = ProductService(repo);
+
+    getProducts();
+  }
+
+  void getProducts() async {
+    final products = await service.getByCategory('electronics');
+    setState(() {
+      this.products = products;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +56,10 @@ class _HomePageState extends State<HomePage> {
                 children: [
                   const HomeJumbotron(
                     imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                    title: 'OUTERWEAR',
+                    title: 'Electronic',
                     buttonTitle: 'View Collection',
                   ),
-                  Catalog(products: clothes, title: 'Most Popular Outerwear'),
+                  Catalog(products: products, title: 'Most Popular Electronics'),
                   const SizedBox(height: 24,),
                   const HomeJumbotron(
                     imageUrl: 'https://images.unsplash.com/photo-1686715692509-8cb69d40d081?q=80&w=3154&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',

@@ -9,11 +9,16 @@ class SmallText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Text(
-      title,
-      style: TextStyle(
-          fontFamily: 'Montserrat',
-          color: color ?? Colors.black
+    return SizedBox(
+      width: 100,
+      child: Text(
+        title,
+        overflow: TextOverflow.ellipsis,
+        style: TextStyle(
+
+            fontFamily: 'Montserrat',
+            color: color ?? Colors.black
+        ),
       ),
     );
   }

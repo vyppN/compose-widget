@@ -8,9 +8,9 @@
 
 class Product {
   Product({
-      int? id, 
+      num? id, 
       String? title, 
-      int? price, 
+      num? price, 
       String? description, 
       String? category, 
       String? image, 
@@ -33,16 +33,16 @@ class Product {
     _image = json['image'];
     _rating = json['rating'] != null ? Rating.fromJson(json['rating']) : null;
   }
-  int? _id;
+  num? _id;
   String? _title;
-  int? _price;
+  num? _price;
   String? _description;
   String? _category;
   String? _image;
   Rating? _rating;
-Product copyWith({  int? id,
+Product copyWith({  num? id,
   String? title,
-  int? price,
+  num? price,
   String? description,
   String? category,
   String? image,
@@ -55,9 +55,9 @@ Product copyWith({  int? id,
   image: image ?? _image,
   rating: rating ?? _rating,
 );
-  int? get id => _id;
+  num? get id => _id;
   String? get title => _title;
-  int? get price => _price;
+  num? get price => _price;
   String? get description => _description;
   String? get category => _category;
   String? get image => _image;
@@ -84,8 +84,8 @@ Product copyWith({  int? id,
 
 class Rating {
   Rating({
-      double? rate, 
-      int? count,}){
+      num? rate, 
+      num? count,}){
     _rate = rate;
     _count = count;
 }
@@ -94,15 +94,15 @@ class Rating {
     _rate = json['rate'];
     _count = json['count'];
   }
-  double? _rate;
-  int? _count;
-Rating copyWith({  double? rate,
-  int? count,
+  num? _rate;
+  num? _count;
+Rating copyWith({  num? rate,
+  num? count,
 }) => Rating(  rate: rate ?? _rate,
   count: count ?? _count,
 );
-  double? get rate => _rate;
-  int? get count => _count;
+  num? get rate => _rate;
+  num? get count => _count;
 
   Map<String, dynamic> toJson() {
     final map = <String, dynamic>{};

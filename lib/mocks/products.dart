@@ -14,21 +14,3 @@ final List<ProductToDisplay> cars =[
   ProductToDisplay(id: 'car-02', category: 'car', imageUrl: 'https://images.unsplash.com/photo-1494976388531-d1058494cdd8?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', name: 'Ford Mustang', price: 39990),
   ProductToDisplay(id: 'car-03', category: 'car', imageUrl: 'https://images.unsplash.com/photo-1493238792000-8113da705763?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D', name: 'Audi R8', price: 129900),
 ];
-
-class MockProductRepository implements ProductRepository {
-  
-  final HttpService httpService;
-  
-  MockProductRepository(this.httpService);
-  
-  @override
-  Future<List<Product>> getByCategory(String category) async {
-    final response = await httpService.get(category);
-    List<Product> products = [];
-    for(dynamic res in response) {
-      products.add(Product.fromJson(res));
-    }
-    return products;
-  }
-  
-}

@@ -12,6 +12,7 @@ import 'package:widget_compose/main.dart';
 import 'package:widget_compose/mocks/mock_http_service.dart';
 import 'package:widget_compose/mocks/products.dart';
 import 'package:widget_compose/port/product.dart';
+import 'package:widget_compose/repositories/product_repository.dart';
 import 'package:widget_compose/services/product_service.dart';
 
 void main() {
@@ -30,8 +31,8 @@ void main() {
       }
     }];
 
-    final productRepository = MockProductRepository(mockHttpService);
-    final productService = ProductServiceImp(productRepository);
+    final productRepository = ProductRepository(mockHttpService);
+    final productService = ProductService(productRepository);
     final products = await productService.getByCategory('electronics');
 
     expect(products, isNotEmpty);
