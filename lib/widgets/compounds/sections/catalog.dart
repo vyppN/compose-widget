@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:go_router/go_router.dart';
 import 'package:widget_compose/entities/product.dart';
 import 'package:widget_compose/widgets/compounds/list/product_list.dart';
 import 'package:widget_compose/widgets/elements/texts/text_title.dart';
@@ -19,7 +20,9 @@ class Catalog extends StatelessWidget {
           padding: const EdgeInsets.fromLTRB(16, 8, 16, 24),
           child: TextTitle(title: title),
         ),
-        ProductList(products: products)
+        ProductList(products: products, onSelected: (product) {
+          context.go('/detail', extra: product);
+        },)
       ],
     );
   }

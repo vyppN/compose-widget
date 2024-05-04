@@ -2,9 +2,12 @@ import 'package:flutter/cupertino.dart';
 import 'package:widget_compose/entities/product.dart';
 import 'package:widget_compose/widgets/compounds/cards/product_card.dart';
 
+typedef ProductListGestureSelected = void Function(ProductToDisplay product);
+
 class ProductList extends StatelessWidget {
   final List<ProductToDisplay> products;
-  const ProductList({super.key, required this.products});
+  final ProductListGestureSelected onSelected;
+  const ProductList({super.key, required this.products, required this.onSelected});
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +22,12 @@ class ProductList extends StatelessWidget {
           scrollDirection: Axis.horizontal,
           itemCount: products.length,
           itemBuilder: (context, index) {
-            return ProductCard(product: products[index],);
+            return GestureDetector(
+              child: ProductCard(product: products[index],),
+              onTap: () {
+                onSelected(products[index]);
+              },
+            );
           },
       ),
     );
