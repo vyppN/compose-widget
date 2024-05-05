@@ -40,6 +40,8 @@ class _HomePageState extends State<HomePage> {
     // Loop สร้าง Future list ในการเรียกดู product by category เอาไว้
     final productsFetchers = categories.map((e) => service.getByCategory(e));
     // เอา Future list ทั้งหมดมารอ reponse พร้อมๆกัน
+    // ข้อดี: ทุกเส้นถูกเรียกพร้อมกัน ใช้เวลาเท่าเส้นที่เรียกนานที่สุด
+    // ข้อเสีย: Server รับ load มากขึ้น เพราะถูกเรียกพร้อมกันทีเดียวหลายเส้น ต้องมีการวางแผน scaling ที่ดี
     final products = await Future.wait(productsFetchers);
 
     setState(() {
