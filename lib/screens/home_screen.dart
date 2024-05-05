@@ -35,8 +35,11 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getProducts() async {
+    // Get category ทั้งหมด
     final categories = await service.getCategories();
+    // Loop สร้าง Future list ในการเรียกดู product by category เอาไว้
     final productsFetchers = categories.map((e) => service.getByCategory(e));
+    // เอา Future list ทั้งหมดมารอ reponse พร้อมๆกัน
     final products = await Future.wait(productsFetchers);
 
     setState(() {
