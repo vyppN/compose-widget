@@ -38,6 +38,23 @@ void main() {
     expect(products, isNotEmpty);
     expect(products[0].category, 'electronics');
   });
+
+  test('Get all categories gets categories', () async {
+    final mockHttpService = MockHttpService('mock');
+    mockHttpService.returnData = [
+      "hello",
+      "jewelery",
+      "men's clothing",
+      "women's clothing"
+    ];
+    final productRepository = ProductRepository(mockHttpService);
+    final productService = ProductService(productRepository);
+    final categories = await productService.getCategories();
+
+    expect(categories, isNotEmpty);
+    expect(categories[0], 'hello');
+
+  });
   // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
   //   // Build our app and trigger a frame.
   //   await tester.pumpWidget(const MyApp());

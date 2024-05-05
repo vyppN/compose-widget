@@ -11,4 +11,9 @@ class ProductService extends IProductService {
     return rawProducts.map((product) => ProductToDisplay(id: product.id.toString(), category: product.category!, name: product.title!, imageUrl: product.image!, price: product.price!.toDouble())).toList();
   }
 
+  @override
+  Future<List<String>> getCategories() async {
+    return await repository.getCategories();
+  }
+
 }

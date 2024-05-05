@@ -26,7 +26,8 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   late final IProductService service;
 
-  List<ProductToDisplay> products = [];
+  List<List<ProductToDisplay>> products = [];
+  List<String> categories = [];
 
   _HomePageState() {
     final http = DioService('https://fakestoreapi.com');
@@ -37,8 +38,12 @@ class _HomePageState extends State<HomePage> {
   }
 
   void getProducts() async {
-    final products = await service.getByCategory('electronics');
+    final categories = await service.getCategories();
+    final productsFetchers = categories.map((e) => service.getByCategory(e));
+    final products = await Future.wait(productsFetchers);
+
     setState(() {
+      this.categories = categories;
       this.products = products;
     });
   }
@@ -52,23 +57,22 @@ class _HomePageState extends State<HomePage> {
             children: [
               const HomeNavbar(),
               Expanded(
-                child: ListView(
-                children: [
-                  const HomeJumbotron(
-                    imageUrl: 'https://images.unsplash.com/photo-1483985988355-763728e1935b?q=80&w=3870&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                    title: 'Electronic',
-                    buttonTitle: 'View Collection',
-                  ),
-                  Catalog(products: products, title: 'Most Popular Electronics'),
-                  const SizedBox(height: 24,),
-                  const HomeJumbotron(
-                    imageUrl: 'https://images.unsplash.com/photo-1686715692509-8cb69d40d081?q=80&w=3154&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D',
-                    title: 'AUTOMOBILE',
-                    buttonTitle: 'View Collection',
-                  ),
-                  Catalog(products: cars, title: 'Most Popular Car')
-                ],
-                      ),
+                child: ListView.builder(
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return Column(
+                      children: [
+                        HomeJumbotron(
+                            imageUrl: categoryImages[categories[index]]!,
+                            title: categories[index].toUpperCase(),
+                            buttonTitle: 'ViewCollection'
+                        ),
+                        Catalog(title: 'All products',products: products[index]),
+                        const SizedBox(height: 24,)
+                      ],
+                    );
+                  },
+                )
               ),
             ],
           ),

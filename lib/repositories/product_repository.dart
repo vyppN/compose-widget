@@ -18,4 +18,10 @@ class ProductRepository implements IProductRepository {
     return products;
   }
 
+  @override
+  Future<List<String>> getCategories() async {
+    final response = await httpService.get('/products/categories');
+    return (response as List<dynamic>).map((e) => e.toString()).toList();
+  }
+
 }
