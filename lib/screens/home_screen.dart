@@ -11,6 +11,7 @@ import 'package:widget_compose/services/product_service.dart';
 import 'package:widget_compose/widgets/compounds/cards/product_card.dart';
 import 'package:widget_compose/widgets/compounds/jumbotron/home_jumbotron.dart';
 import 'package:widget_compose/widgets/compounds/list/product_list.dart';
+import 'package:widget_compose/widgets/compounds/loading/loading_indicator.dart';
 import 'package:widget_compose/widgets/compounds/navbar/home_nav.dart';
 import 'package:widget_compose/widgets/compounds/sections/catalog.dart';
 import 'package:widget_compose/widgets/elements/inputs/search_input.dart';
@@ -61,6 +62,10 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
+  void onSelectProduct(ProductToDisplay product) {
+    print(product.name);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -70,30 +75,22 @@ class _HomePageState extends State<HomePage> {
             children: [
               const HomeNavbar(),
               Expanded(
-                  child: !isLoading
-                      ? ListView.builder(
-                          itemCount: categories.length,
-                          itemBuilder: (context, index) {
-                            return Column(
-                              children: [
-                                HomeJumbotron(
-                                    imageUrl: categoryImages[categories[index]]!,
-                                    title: categories[index].toUpperCase(),
-                                    buttonTitle: 'ViewCollection'
-                                ),
-                                Catalog(title: 'All products',products: products[index]),
-                                const SizedBox(height: 24,)
-                              ],
-                          );},)
-                      : const Center(
-                        child: SizedBox(
-                            width: 100,
-                            height: 100,
-                            child: LoadingIndicator(
-                                indicatorType: Indicator.audioEqualizer
-                            )
-                        )
-                  )
+                  child: isLoading
+                      ? const Loading()
+                      : ListView.builder(
+                    itemCount: categories.length,
+                    itemBuilder: (context, index) {
+                      return Column(
+                        children: [
+                          HomeJumbotron(
+                              imageUrl: categoryImages[categories[index]]!,
+                              title: categories[index].toUpperCase(),
+                              buttonTitle: 'View Collection'
+                          ),
+                          Catalog(title: 'All products',products: products[index], onSelectProduct: onSelectProduct,),
+                          const SizedBox(height: 24,)
+                        ],
+                      );},)
               )
             ],
           ),
