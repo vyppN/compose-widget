@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:loading_indicator/loading_indicator.dart';
 import 'package:widget_compose/di/get_it.dart';
 import 'package:widget_compose/entities/product.dart';
 import 'package:widget_compose/network/http/dio_service.dart';
@@ -30,11 +31,20 @@ class _HomePageState extends State<HomePage> {
   List<List<ProductToDisplay>> products = [];
   List<String> categories = [];
 
-  _HomePageState() {
+  bool isLoading = false;
+
+
+  @override
+  void initState() {
     getProducts();
+    super.initState();
   }
 
   void getProducts() async {
+
+    setState(() {
+      isLoading = true;
+    });
     // Get category ทั้งหมด
     final categories = await service.getCategories();
     // Loop สร้าง Future list ในการเรียกดู product by category เอาไว้
@@ -47,6 +57,7 @@ class _HomePageState extends State<HomePage> {
     setState(() {
       this.categories = categories;
       this.products = products;
+      isLoading = false;
     });
   }
 
@@ -59,23 +70,31 @@ class _HomePageState extends State<HomePage> {
             children: [
               const HomeNavbar(),
               Expanded(
-                child: ListView.builder(
-                  itemCount: categories.length,
-                  itemBuilder: (context, index) {
-                    return Column(
-                      children: [
-                        HomeJumbotron(
-                            imageUrl: categoryImages[categories[index]]!,
-                            title: categories[index].toUpperCase(),
-                            buttonTitle: 'ViewCollection'
-                        ),
-                        Catalog(title: 'All products',products: products[index]),
-                        const SizedBox(height: 24,)
-                      ],
-                    );
-                  },
-                )
-              ),
+                  child: !isLoading
+                      ? ListView.builder(
+                          itemCount: categories.length,
+                          itemBuilder: (context, index) {
+                            return Column(
+                              children: [
+                                HomeJumbotron(
+                                    imageUrl: categoryImages[categories[index]]!,
+                                    title: categories[index].toUpperCase(),
+                                    buttonTitle: 'ViewCollection'
+                                ),
+                                Catalog(title: 'All products',products: products[index]),
+                                const SizedBox(height: 24,)
+                              ],
+                          );},)
+                      : const Center(
+                        child: SizedBox(
+                            width: 100,
+                            height: 100,
+                            child: LoadingIndicator(
+                                indicatorType: Indicator.audioEqualizer
+                            )
+                        )
+                  )
+              )
             ],
           ),
         ),
