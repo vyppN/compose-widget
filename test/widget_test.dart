@@ -7,18 +7,28 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:get_it/get_it.dart';
+import 'package:widget_compose/di/get_it.dart';
 
 import 'package:widget_compose/main.dart';
 import 'package:widget_compose/mocks/mock_http_service.dart';
 import 'package:widget_compose/mocks/products.dart';
+import 'package:widget_compose/network/http/http_service.dart';
 import 'package:widget_compose/port/product.dart';
 import 'package:widget_compose/repositories/product_repository.dart';
 import 'package:widget_compose/services/product_service.dart';
 
 void main() {
+  final getIt = GetIt.instance;
+
+  getIt.registerSingleton<HttpService>(MockHttpService('mock'));
+  getIt.registerSingleton<IProductRepository>(ProductRepository());
+  getIt.registerSingleton<IProductService>(ProductService());
+
   test('Get product by electronics category returns electronics products',() async {
-    final mockHttpService = MockHttpService('mock');
-    mockHttpService.returnData = [{
+
+    final mockHttpService = getIt.get<HttpService>();
+    (mockHttpService as MockHttpService).returnData = [{
       "id": 9,
       "title": "WD 2TB Elements Portable External Hard Drive - USB 3.0 ",
       "price": 64,
@@ -31,8 +41,7 @@ void main() {
       }
     }];
 
-    final productRepository = ProductRepository(mockHttpService);
-    final productService = ProductService(productRepository);
+    final productService = getIt.get<IProductService>();
     final products = await productService.getByCategory('electronics');
 
     expect(products, isNotEmpty);
@@ -40,35 +49,18 @@ void main() {
   });
 
   test('Get all categories gets categories', () async {
-    final mockHttpService = MockHttpService('mock');
-    mockHttpService.returnData = [
+    final mockHttpService = getIt.get<HttpService>();
+    (mockHttpService as MockHttpService).returnData = [
       "hello",
       "jewelery",
       "men's clothing",
       "women's clothing"
     ];
-    final productRepository = ProductRepository(mockHttpService);
-    final productService = ProductService(productRepository);
+    final productService = getIt.get<IProductService>();
     final categories = await productService.getCategories();
 
     expect(categories, isNotEmpty);
     expect(categories[0], 'hello');
 
   });
-  // testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-  //   // Build our app and trigger a frame.
-  //   await tester.pumpWidget(const MyApp());
-  //
-  //   // Verify that our counter starts at 0.
-  //   expect(find.text('0'), findsOneWidget);
-  //   expect(find.text('1'), findsNothing);
-  //
-  //   // Tap the '+' icon and trigger a frame.
-  //   await tester.tap(find.byIcon(Icons.add));
-  //   await tester.pump();
-  //
-  //   // Verify that our counter has incremented.
-  //   expect(find.text('0'), findsNothing);
-  //   expect(find.text('1'), findsOneWidget);
-  // });
 }
