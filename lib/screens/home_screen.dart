@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:go_router/go_router.dart';
 import 'package:loading_indicator/loading_indicator.dart';
 import 'package:widget_compose/di/get_it.dart';
 import 'package:widget_compose/entities/product.dart';
@@ -63,7 +64,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   void onSelectProduct(ProductToDisplay product) {
-    print(product.name);
+    context.go('/detail', extra: product);
   }
 
   @override
@@ -81,6 +82,7 @@ class _HomePageState extends State<HomePage> {
                     itemCount: categories.length,
                     itemBuilder: (context, index) {
                       return Column(
+                        key: UniqueKey(),
                         children: [
                           HomeJumbotron(
                               imageUrl: categoryImages[categories[index]]!,

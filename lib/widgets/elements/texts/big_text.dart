@@ -18,7 +18,7 @@ class BigText extends StatelessWidget {
         fontFamily: 'Oswald',
         color: color ?? Colors.white,
         fontWeight: FontWeight.w800,
-        fontSize: 40
+        fontSize: 40,
       ),
     );
   }

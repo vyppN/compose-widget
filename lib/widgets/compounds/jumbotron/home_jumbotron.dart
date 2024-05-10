@@ -9,8 +9,6 @@ class HomeJumbotron extends StatelessWidget {
 
   const HomeJumbotron({super.key, required this.imageUrl, required this.title, required this.buttonTitle});
 
-  
-  
   @override
   Widget build(BuildContext context) {
     return SizedBox(
@@ -33,7 +31,7 @@ class HomeJumbotron extends StatelessWidget {
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     BigText(title: title),
-                    PrimaryButton(title: buttonTitle)
+                    PrimaryButton(title: buttonTitle, onPress: (){print(title);},)
                   ],
                 ),
               ),
