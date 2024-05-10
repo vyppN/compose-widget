@@ -8,7 +8,7 @@ import 'package:widget_compose/di/get_it.dart';
 import 'package:widget_compose/entities/product.dart';
 import 'package:widget_compose/network/http/dio_service.dart';
 import 'package:widget_compose/repositories/product_repository.dart';
-import 'package:widget_compose/riverpod/product_notifier.dart';
+import 'package:widget_compose/riverpod/product_controller.dart';
 import 'package:widget_compose/services/product_service.dart';
 // import 'package:widget_compose/mocks/products.dart';
 import 'package:widget_compose/widgets/compounds/cards/product_card.dart';

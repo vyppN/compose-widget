@@ -4,7 +4,7 @@ import 'package:widget_compose/entities/product.dart';
 import 'package:widget_compose/port/product.dart';
 import 'package:widget_compose/riverpod/product_state.dart';
 
-part 'product_notifier.g.dart';
+part 'product_controller.g.dart';
 
 @riverpod
 class ProductController extends _$ProductController {
