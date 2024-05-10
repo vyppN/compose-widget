@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:widget_compose/di/get_it.dart';
 import 'package:widget_compose/router/go_router.dart';
 import 'package:widget_compose/screens/home_screen.dart';
@@ -6,7 +7,9 @@ import 'package:widget_compose/screens/home_screen.dart';
 void main() {
   registerServices();
   WidgetsFlutterBinding.ensureInitialized();
-  runApp(const MyApp());
+  runApp(
+    const ProviderScope(child: MyApp())
+  );
 }
 
 class MyApp extends StatelessWidget {
